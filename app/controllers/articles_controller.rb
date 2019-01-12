@@ -25,7 +25,13 @@ class ArticlesController < ApplicationController
 
   def update
     @article = Article.find(params[:id])
-    @article.update(title: params[:article][:title], description: params[:article][:description])
+    # Only Updates if there are any changes.
+    if @article.title != params[:article][:title]
+      @article.update(title: params[:article][:title])
+    end
+    if @article.description != params[:article][:description]
+      @article.update(description: params[:article][:description])
+    end
     redirect_to article_path(@article)
   end
 end
